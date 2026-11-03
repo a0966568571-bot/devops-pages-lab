@@ -1,3 +1,5 @@
+import contextlib
+import io
 import os
 import sys
 import tempfile
@@ -137,6 +139,13 @@ class Version(unittest.TestCase):
 
 
 class Smoke(unittest.TestCase):
+    # smoke() prints "::error::" lines; GitHub would turn them into real
+    # annotations on the test job, so keep the output inside the test.
+    def setUp(self):
+        quiet = contextlib.redirect_stdout(io.StringIO())
+        quiet.__enter__()
+        self.addCleanup(quiet.__exit__, None, None, None)
+
     def fake(self, versions):
         calls = iter(versions)
 
