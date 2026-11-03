@@ -27,8 +27,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Unit tests for the gate and smoke test scripts
@@ -44,16 +44,16 @@ jobs:
       base_path: ${{ steps.pages.outputs.base_path }}
       page_url: ${{ steps.pages.outputs.base_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Stamp version
         run: echo "$VERSION" > version.txt
       - uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
 
@@ -61,12 +61,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       # Check the exact artifact that deploy will publish, not a rebuild.
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: github-pages
           path: artifact
@@ -91,7 +91,7 @@ jobs:
     steps:
       - id: deployment
         if: ${{ !inputs.simulate_stale_deploy }}
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
       - if: ${{ inputs.simulate_stale_deploy }}
         run: echo "::warning::Demo mode - deploy skipped on purpose. The smoke test should catch the old version."
 
@@ -99,8 +99,8 @@ jobs:
     needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Live site must serve this run's version
