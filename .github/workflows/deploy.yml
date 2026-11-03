@@ -1,0 +1,111 @@
+name: Deploy site (gated)
+# test -> build -> validate (gate) -> deploy -> smoke test
+# Pull requests run everything up to the gate; only main deploys.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      simulate_stale_deploy:
+        description: "Demo: skip the real deploy, so the live site keeps the old version"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false   # never cut a deploy in half
+
+env:
+  # What this run builds. The smoke test expects exactly this on the live site.
+  VERSION: ${{ github.sha }} ${{ github.run_id }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests for the gate and smoke test scripts
+        run: python -m unittest discover -s tests -v
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    outputs:
+      base_path: ${{ steps.pages.outputs.base_path }}
+      page_url: ${{ steps.pages.outputs.base_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: Stamp version
+        run: echo "$VERSION" > version.txt
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  validate:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Check the exact artifact that deploy will publish, not a rebuild.
+      - uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: artifact
+      - run: mkdir _site && tar -xf artifact/artifact.tar -C _site
+      - name: Gate (markers, HTML, links, version)
+        run: >
+          python scripts/validate_site.py
+          --site _site --readme README.md
+          --base-path "${{ needs.build.outputs.base_path }}"
+          --expect-version "$VERSION"
+
+  deploy:
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        if: ${{ !inputs.simulate_stale_deploy }}
+        uses: actions/deploy-pages@v4
+      - if: ${{ inputs.simulate_stale_deploy }}
+        run: echo "::warning::Demo mode - deploy skipped on purpose. The smoke test should catch the old version."
+
+  smoke-test:
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Live site must serve this run's version
+        run: >
+          python scripts/smoke_test.py
+          --url "${{ needs.build.outputs.page_url }}"
+          --expect-version "$VERSION"
+          --attempts 12 --delay 15
