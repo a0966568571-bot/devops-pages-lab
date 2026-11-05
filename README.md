@@ -4,14 +4,14 @@ DevOps Assignment 7: GitHub Pages + auto activity log.
 
 ## Recent activity
 <!--START_SECTION:activity-->
-1. 🔀 Merged PR #3 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/3)
-2. 📥 Opened PR #3 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/3)
-3. 🔀 Merged PR #2 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/2)
-4. 📥 Opened PR #2 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/2)
-5. 🔀 Merged PR #1 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/1)
-6. 📥 Opened PR #1 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/1)
-7. 🎉 Created a new branch feat/YenJung-note in [Cindy5180/activity-log-ci-lab](https://github.com/Cindy5180/activity-log-ci-lab/tree/feat/YenJung-note)
-8. 📝 Committed to feat/YenJung-note in [Cindy5180/activity-log-ci-lab](https://github.com/Cindy5180/activity-log-ci-lab/commit/873f76ffabcaf9ca9aefdf3f1e1625581e6ff905)
-9. 🔀 Merged PR #10 in [Cindy5180/activity-log-ci-lab](https://github.com/Cindy5180/activity-log-ci-lab/pull/10)
-10. 🔎 Created PR #8 in [Cindy5180/activity-log-ci-lab](https://github.com/Cindy5180/activity-log-ci-lab/pull/8#pullrequestreview-5667412444)
+1. 📝 Committed to main in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/commit/d2e3872f1331edab925211e01f0a59eed7a8b6bf)
+2. 📝 Committed to main in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/commit/c2ebbac66e67c046ea14af9e896731ebb1f03e20)
+3. 🎉 Created a new branch fix/quiet-test-output in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/tree/fix/quiet-test-output)
+4. 🗑️ Deleted a branch chore/bump-actions in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab)
+5. 📝 Committed to main in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/commit/bbb2a694c1483ca0ca8177e80866c2ebcc487753)
+6. 🎉 Created a new branch main in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/tree/main)
+7. 📝 Committed to main in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/commit/3f0aad593b517230ab161dc8d376da664ddade14)
+8. 🗑️ Deleted a branch fix/quiet-test-output in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab)
+9. 🎉 Created a new branch o-gated-deploy in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/tree/o-gated-deploy)
+10. 🔀 Merged PR #3 in [a0966568571-bot/devops-pages-lab](https://github.com/a0966568571-bot/devops-pages-lab/pull/3)
 <!--END_SECTION:activity-->
